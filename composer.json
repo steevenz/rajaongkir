@@ -19,7 +19,7 @@
 	},
 	"links"             : {
 		"info"        : "http://o2system.in/features/standalone/o2cache",
-		"wiki"        : "https://github.com/steevenz/rajaongkir/wiki",
+		"wiki"        : "https://github.com/steevenz/rajaongkir/wiki"
 	},
 	"require"           : {
 		"php"              : ">=5.4.0",
