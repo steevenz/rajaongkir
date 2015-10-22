@@ -1,0 +1,33 @@
+{
+	"name"              : "steevenz/rajaongkir",
+	"description"       : "RajaOngkir API PHP Class",
+	"license"           : "GNU General Public License v2.0 License",
+	"version"           : "1.0.0",
+	"type"              : "php-class",
+	"keywords"          : [ "rajaongkir", "api" ],
+	"authors"           : [
+		{
+			"name"     : "Steeve Andrian",
+			"email"    : "steevenz@steevenz.com",
+			"homepage" : "http://www.steevenz.com",
+			"role"     : "PHP Programmer"
+		}
+	],
+	"support"           : {
+		"email"  : "steevenz@steevenz.com",
+		"issues" : "https://github.com/steevenz/rajaongkir/issues"
+	},
+	"links"             : {
+		"info"        : "http://o2system.in/features/standalone/o2cache",
+		"wiki"        : "https://github.com/steevenz/rajaongkir/wiki",
+	},
+	"require"           : {
+		"php"              : ">=5.4.0",
+		"o2system/o2curl"  : "dev-master"
+	},
+	"autoload"          : {
+		"files" : [
+			"src/Rajaongkir.php"
+		]
+	}
+}
