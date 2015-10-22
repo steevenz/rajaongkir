@@ -1,5 +1,4 @@
 # RajaOngkir
-============
 Ini adalah Unofficial RajaOngkir API PHP Class, yang berfungsi untuk melakukan request API RajaOngkir.
 
 Instalasi
@@ -14,8 +13,24 @@ Penggunaan
 ```php
 use Steevenz\Rajaongkir;
 
-// Inisiasi Class Rajaongkir
-$rajaongkir = new Rajaongkir('API_KEY_ANDA', 'TIPE_ACCOUNT_ANDA');
+/*
+ * --------------------------------------------------------------
+ * Inisiasi Class RajaOngkir
+ *
+ * Tipe account yang tersedia di RajaOngkir:
+ * - starter (tidak support international dan metode waybill)
+ * - basic
+ * - pro
+ *
+ * @param string API Key
+ * @param string Account Type (lowercase)
+ * --------------------------------------------------------------
+ */
+ // inisiasi untuk tipe starter
+ $rajaongkir = new Rajaongkir();
+ 
+ // inisiasi untuk tipe account basic / pro
+ $rajaongkir = new Rajaongkir('API_KEY_ANDA', 'basic');
 
 /*
  * --------------------------------------------------------------
@@ -78,6 +93,54 @@ $subdistrict = $rajaongkir->get_subdistrict(1);
 
 /*
  * --------------------------------------------------------------
+ * Mendapatkan list seluruh kota yang mendukung pengiriman
+ * ke Internasional
+ * (tidak tersedia untuk tipe account starter)
+ * --------------------------------------------------------------
+ */
+$international_origins = $rajaongkir->get_international_origins();
+
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan list seluruh kota yang mendukung pengiriman
+ * ke Internasional di propinsi tertentu
+ * (tidak tersedia untuk tipe account starter)
+ *
+ * @param int Province ID
+ * --------------------------------------------------------------
+ */
+$international_origins = $rajaongkir->get_international_origins(6);
+
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan detail Origin Internasional
+ * (tidak tersedia untuk tipe account starter)
+ *
+ * @param int City ID
+ * --------------------------------------------------------------
+ */
+$international_origin = $rajaongkir->get_international_origin(152);
+
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan list seluruh negara tujuan Internasional
+ * (tidak tersedia untuk tipe account starter)
+ * --------------------------------------------------------------
+ */
+$international_destinations = $rajaongkir->get_international_destinations();
+
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan detail tujuan Internasional
+ * (tidak tersedia untuk tipe account starter)
+ *
+ * @param int Country ID
+ * --------------------------------------------------------------
+ */
+$international_destination = $rajaongkir->get_international_destination(108);
+
+/*
+ * --------------------------------------------------------------
  * Mendapatkan harga ongkos kirim berdasarkan berat dalam gram
  *
  * @param array Origin 
@@ -130,6 +193,19 @@ $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574],
                                                 'width' => 50, 
                                                 'height' => 50
                                         ), 'jne');
+                                        
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan harga ongkos kirim international berdasarkan berat 
+ * dalam gram (tidak tersedia untuk tipe account starter)
+ *
+ * @param array Origin 
+ * @param array Destination
+ * @param int|array Weight|Metrics
+ * @param string Courier
+ * --------------------------------------------------------------
+ */
+$cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos');                                        
 
 /*
  * --------------------------------------------------------------
