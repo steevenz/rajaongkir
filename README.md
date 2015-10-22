@@ -1,5 +1,5 @@
 # RajaOngkir
-Ini adalah Unofficial RajaOngkir API PHP Class, yang berfungsi untuk melakukan request API RajaOngkir.
+Ini adalah Unofficial [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
 
 Instalasi
 ---------
@@ -235,7 +235,7 @@ Requirements
 
 Referensi
 ---------
-Untuk mengetahui lebih lanjut mengenai RajaOngkir API, lihat di Dokumentasi RajaOngkir.
+Untuk mengetahui lebih lanjut mengenai RajaOngkir API, lihat di [Dokumentasi RajaOngkir][12].
 
 [1]: http://steevenz.com
 [2]: http://steevenz.com/blog/rajaongkir-api
@@ -246,3 +246,5 @@ Untuk mengetahui lebih lanjut mengenai RajaOngkir API, lihat di Dokumentasi Raja
 [7]: https://packagist.org/packages/steevenz/rajaongkir
 [9]: https://getcomposer.org
 [10]: http://github.com/o2system/o2curl
+[11]: http://rajaongkir.com
+[12]: http://rajaongkir.com/dokumentasi
