@@ -1,11 +1,11 @@
 # RajaOngkir
-Ini adalah Unofficial [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
+Ini adalah Advanced [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
 
 Instalasi
 ---------
 Cara terbaik untuk melakukan instalasi library ini adalah dengan menggunakan [Composer][7]
 ```
-composer require steevenz/rajaongkir:"dev-master"
+composer require steevenz/rajaongkir
 ```
 
 Penggunaan
