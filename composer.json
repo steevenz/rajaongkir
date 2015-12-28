@@ -1,6 +1,6 @@
 {
 	"name"              : "steevenz/rajaongkir",
-	"description"       : "RajaOngkir API PHP Class",
+	"description"       : "Advanced RajaOngkir API PHP Class",
 	"license"           : "GNU General Public License v3.0 License",
 	"type"              : "php-class",
 	"keywords"          : [ "rajaongkir", "api" ],
@@ -17,7 +17,7 @@
 		"issues" : "https://github.com/steevenz/rajaongkir/issues"
 	},
 	"links"             : {
-		"info"        : "http://o2system.in/features/standalone/o2cache",
+		"info"        : "https://github.com/steevenz/rajaongkir",
 		"wiki"        : "https://github.com/steevenz/rajaongkir/wiki"
 	},
 	"require"           : {
