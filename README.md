@@ -1,5 +1,12 @@
 # RajaOngkir
+[![Latest Stable Version](https://poser.pugx.org/steevenz/rajaongkir/v/stable)](https://packagist.org/packages/steevenz/rajaongkir) [![Total Downloads](https://poser.pugx.org/steevenz/rajaongkir/downloads)](https://packagist.org/packages/steevenz/rajaongkir) [![Latest Unstable Version](https://poser.pugx.org/steevenz/rajaongkir/v/unstable)](https://packagist.org/packages/steevenz/rajaongkir) [![License](https://poser.pugx.org/steevenz/rajaongkir/license)](https://packagist.org/packages/steevenz/rajaongkir)
+
 Ini adalah Advanced [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
+
+Fitur
+-----
+- Support seluruh tipe akun RajaOngkir (Starter, Basic, Pro).
+- Support mendapatkan biaya ongkos kirim berdasarkan berat (gram) dan volume metrics (p x l x t - otomatis akan dikonversi ke satuan gram). 
 
 Instalasi
 ---------
@@ -31,6 +38,12 @@ use Steevenz\Rajaongkir;
  
  // inisiasi untuk tipe account basic / pro
  $rajaongkir = new Rajaongkir('API_KEY_ANDA', 'basic');
+ 
+ // inisiasi dengan config array
+ $config['api_key'] = 'API_KEY_ANDA';
+ $config['account_type'] = 'basic';
+ 
+ $rajaongkir = new Rajaongkir($config);
 
 /*
  * --------------------------------------------------------------
