@@ -227,6 +227,8 @@ $cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos');
  $waybill = $rajaongkir->get_waybill('SOCAG00183235715', 'jne');
 ```
 
+Untuk keterangan lebih lengkap dapat dibaca di [Wiki](https://github.com/steevenz/rajaongkir/wiki)
+
 Ide, Kritik dan Saran
 ---------------------
 Jika anda memiliki ide, kritik ataupun saran, anda dapat mengirimkan email ke [steevenz@stevenz.com][3]. 
