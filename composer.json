@@ -23,7 +23,7 @@
 	},
 	"require"           : {
 		"php"              : ">=5.4.0",
-		"o2system/o2curl"  : "dev-master"
+		"o2system/o2curl"  : "*"
 	},
 	"autoload"          : {
 		"files" : [
