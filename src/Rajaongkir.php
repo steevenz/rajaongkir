@@ -1,6 +1,6 @@
 <?php
 /**
- * Advanced RajaOngkir Unofficial API
+ * Advanced RajaOngkir PHP API Class
  *
  * Copyright (C) 2015  Steeve Andrian Salim (steevenz)
  *
@@ -32,14 +32,18 @@ namespace Steevenz;
 use O2System\CURL;
 use O2System\CURL\Interfaces\Method;
 
-/**
- * Rajaongkir
- *
- * @version       1.0.0
- * @author        Steeven Andrian Salim
- */
 class Rajaongkir
 {
+	/**
+	 * Constant Account Type
+	 *
+	 * @access  public
+	 * @type    string
+	 */
+	const ACCOUNT_STARTER = 'starter';
+	const ACCOUNT_BASIC   = 'basic';
+	const ACCOUNT_PRO     = 'pro';
+
 	/**
 	 * Rajaongkir Account Type
 	 *
@@ -77,6 +81,83 @@ class Rajaongkir
 	);
 
 	/**
+	 * List of Supported Account Types
+	 *
+	 * @access  protected
+	 * @type    array
+	 */
+	protected $_supported_account_types = array(
+		'starter',
+		'basic',
+		'pro',
+	);
+
+	/**
+	 * Supported Couriers
+	 *
+	 * @access  protected
+	 * @type    array
+	 */
+	protected $_supported_couriers = array(
+		'starter' => array(
+			'jne',
+			'pos',
+			'tiki',
+		),
+		'basic'   => array(
+			'jne',
+			'pos',
+			'tiki',
+			'pcp',
+			'esl',
+			'rpx',
+		),
+		'pro'     => array(
+			'jne',
+			'pos',
+			'tiki',
+			'rpx',
+			'esl',
+			'pcp',
+			'pandu',
+			'wahana',
+		),
+	);
+
+	/**
+	 * Supported Waybills
+	 *
+	 * @access  protected
+	 * @type    array
+	 */
+	protected $_supported_waybills = array(
+		'starter' => array(),
+		'basic'   => array(
+			'jne',
+		),
+		'pro'     => array(
+			'jne',
+		),
+	);
+
+	/**
+	 * Courier List
+	 *
+	 * @access  protected
+	 * @type array
+	 */
+	protected $_couriers_list = array(
+		'jne'    => 'Jalur Nugraha Ekakurir (JNE)',
+		'pos'    => 'POS Indonesia (POS)',
+		'tiki'   => 'Citra Van Titipan Kilat (TIKI)',
+		'pcp'    => 'Priority Cargo and Package (PCP)',
+		'esl'    => 'Eka Sari Lorena (ESL)',
+		'rpx'    => 'RPX Holding (RPX)',
+		'pandu'  => 'Pandu Logistics (PANDU)',
+		'wahana' => 'Wahana Prestasi Logistik (WAHANA)',
+	);
+
+	/**
 	 * O2System CURL Resource
 	 *
 	 * @access  protected
@@ -87,6 +168,7 @@ class Rajaongkir
 	/**
 	 * RajaOngkir Original Response
 	 *
+	 * @access  protected
 	 * @type    mixed
 	 */
 	protected $_response;
@@ -94,9 +176,12 @@ class Rajaongkir
 	/**
 	 * RajaOngkir Errors
 	 *
-	 * @type array
+	 * @access  protected
+	 * @type    array
 	 */
 	protected $_errors = array();
+
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Class Constructor
@@ -117,11 +202,7 @@ class Rajaongkir
 
 				if ( isset( $api_key[ 'account_type' ] ) )
 				{
-					$this->_account_type = $api_key[ 'account_type' ];
-				}
-				elseif ( ! empty( $this->_api_key ) AND ! isset( $this->_account_type ) )
-				{
-					$this->_account_type = 'basic';
+					$account_type = $api_key[ 'account_type' ];
 				}
 			}
 			elseif ( is_string( $api_key ) )
@@ -132,11 +213,11 @@ class Rajaongkir
 
 		if ( isset( $account_type ) )
 		{
-			$this->_account_type = $account_type;
+			$this->_account_type = strtolower( $account_type );
 		}
-		elseif ( ! empty( $this->_api_key ) AND ! isset( $this->_account_type ) )
+		else
 		{
-			$this->_account_type = 'basic';
+			$this->_account_type = 'starter';
 		}
 
 		if ( array_key_exists( $this->_account_type, $this->_api_urls ) )
@@ -186,6 +267,8 @@ class Rajaongkir
 	 */
 	public function set_account_type( $account_type )
 	{
+		$account_type = strtolower( $account_type );
+
 		if ( array_key_exists( $account_type, $this->_api_urls ) )
 		{
 			$this->_account_type = $account_type;
@@ -213,12 +296,7 @@ class Rajaongkir
 	 */
 	protected function _request( $path, $params = array(), $type = Method::GET )
 	{
-		$headers = array();
-
-		if ( $this->_account_type !== 'starter' )
-		{
-			$headers[ 'key' ] = $this->_api_key;
-		}
+		$headers[ 'key' ] = $this->_api_key;
 
 		switch ( $type )
 		{
@@ -248,6 +326,10 @@ class Rajaongkir
 					return $result;
 				}
 			}
+			elseif ( isset( $this->_response->body->rajaongkir->result ) )
+			{
+				return $this->_response->body->rajaongkir->result;
+			}
 			else
 			{
 				if ( isset( $params[ 'origin' ] ) AND isset( $params[ 'destination' ] ) )
@@ -266,6 +348,19 @@ class Rajaongkir
 		}
 
 		return FALSE;
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Get Couriers List
+	 *
+	 * @access  public
+	 * @return  array
+	 */
+	public function get_couriers_list()
+	{
+		return $this->_couriers_list;
 	}
 
 	// ------------------------------------------------------------------------
@@ -443,6 +538,8 @@ class Rajaongkir
 		return $this->_request( 'internationalDestination', $params );
 	}
 
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Get Cost
 	 *
@@ -471,16 +568,19 @@ class Rajaongkir
 	 */
 	public function get_cost( array $origin, array $destination, $metrics, $courier )
 	{
-		if ( key( $destination ) === 'country' AND $this->_account_type === 'starter' ) return FALSE;
+		$params[ 'courier' ] = strtolower( $courier );
 
-		$params[ 'origin' ] = $origin[ key( $origin ) ];
-		$params[ 'destination' ] = $destination[ key( $destination ) ];
-		$params[ 'courier' ] = $courier;
+		$params[ 'originType' ] = strtolower( key( $origin ) );
+		$params[ 'destinationType' ] = strtolower( key( $destination ) );
 
-		if ( $this->_account_type === 'pro' AND key( $destination ) !== 'country' )
+		if ( $params[ 'originType' ] !== 'city' )
 		{
-			$params[ 'originType' ] = key( $origin );
-			$params[ 'destinationType' ] = key( $destination );
+			$params[ 'originType' ] = 'subdistrict';
+		}
+
+		if ( ! in_array( $params[ 'destinationType' ], [ 'city', 'country' ] ) )
+		{
+			$params[ 'destinationType' ] = 'subdistrict';
 		}
 
 		if ( is_array( $metrics ) )
@@ -512,10 +612,96 @@ class Rajaongkir
 				$params[ $key ] = $value;
 			}
 		}
-		else
+		elseif ( is_numeric( $metrics ) )
 		{
 			$params[ 'weight' ] = $metrics;
 		}
+
+		switch ( $this->_account_type )
+		{
+			case 'starter':
+
+				if ( $params[ 'destinationType' ] === 'country' )
+				{
+					$this->_errors[ 301 ] = 'Unsupported International Destination. Tipe akun starter tidak mendukung pengecekan destinasi international.';
+
+					return FALSE;
+				}
+				elseif ( $params[ 'originType' ] === 'subdistrict' OR $params[ 'destinationType' ] === 'subdistrict' )
+				{
+					$this->_errors[ 302 ] = 'Unsupported Subdistrict Origin-Destination. Tipe akun starter tidak mendukung pengecekan ongkos kirim sampai kecamatan.';
+
+					return FALSE;
+				}
+
+				if ( ! isset( $params[ 'weight' ] ) AND
+					isset( $params[ 'length' ] ) AND
+					isset( $params[ 'width' ] ) AND
+					isset( $params[ 'height' ] )
+				)
+				{
+					$this->_errors[ 304 ] = 'Unsupported Dimension. Tipe akun starter tidak mendukung pengecekan biaya kirim berdasarkan dimensi.';
+
+					return FALSE;
+				}
+				elseif ( isset( $params[ 'weight' ] ) AND $params[ 'weight' ] > 30000 )
+				{
+					$this->_errors[ 305 ] = 'Unsupported Weight. Tipe akun starter tidak mendukung pengecekan biaya kirim dengan berat lebih dari 30000 gram (30kg).';
+
+					return FALSE;
+				}
+
+				if ( ! in_array( $params[ 'courier' ], $this->_supported_couriers[ $this->_account_type ] ) )
+				{
+					$this->_errors[ 303 ] = 'Unsupported Courier. Tipe akun starter tidak mendukung pengecekan biaya kirim dengan kurir ' . $this->_couriers_list[ $courier ] . '.';
+
+					return FALSE;
+				}
+
+				break;
+
+			case 'basic':
+
+				if ( $params[ 'originType' ] === 'subdistrict' OR $params[ 'destinationType' ] === 'subdistrict' )
+				{
+					$this->_errors[ 302 ] = 'Unsupported Subdistrict Origin-Destination. Tipe akun basic tidak mendukung pengecekan ongkos kirim sampai kecamatan.';
+
+					return FALSE;
+				}
+
+				if ( ! isset( $params[ 'weight' ] ) AND
+					isset( $params[ 'length' ] ) AND
+					isset( $params[ 'width' ] ) AND
+					isset( $params[ 'height' ] )
+				)
+				{
+					$this->_errors[ 304 ] = 'Unsupported Dimension. Tipe akun basic tidak mendukung pengecekan biaya kirim berdasarkan dimensi.';
+
+					return FALSE;
+				}
+				elseif ( isset( $params[ 'weight' ] ) AND $params[ 'weight' ] > 30000 )
+				{
+					$this->_errors[ 305 ] = 'Unsupported Weight. Tipe akun basic tidak mendukung pengecekan biaya kirim dengan berat lebih dari 30000 gram (30kg).';
+
+					return FALSE;
+				}
+				elseif ( isset( $params[ 'weight' ] ) AND $params[ 'weight' ] < 30000 )
+				{
+					unset( $params[ 'length' ], $params[ 'width' ], $params[ 'height' ] );
+				}
+
+				if ( ! in_array( $params[ 'courier' ], $this->_supported_couriers[ $this->_account_type ] ) )
+				{
+					$this->_errors[ 303 ] = 'Unsupported Courier. Tipe akun basic tidak mendukung pengecekan biaya kirim dengan kurir ' . $this->_couriers_list[ $courier ] . '.';
+
+					return FALSE;
+				}
+
+				break;
+		}
+
+		$params[ 'origin' ] = $origin[ key( $origin ) ];
+		$params[ 'destination' ] = $destination[ key( $destination ) ];
 
 		$path = key( $destination ) === 'country' ? 'internationalCost' : 'cost';
 
@@ -535,13 +721,36 @@ class Rajaongkir
 	 */
 	public function get_waybill( $id_waybill, $courier )
 	{
-		if ( $this->_account_type !== 'pro' ) return FALSE;
+		$courier = strtolower( $courier );
 
-		return $this->_request( 'waybill', array(
-			'key'     => $this->_api_key,
-			'waybill' => $id_waybill,
-			'courier' => $courier,
-		), Method::POST );
+		if ( in_array( $courier, $this->_supported_waybills[ $this->_account_type ] ) )
+		{
+			return $this->_request( 'waybill', array(
+				'key'     => $this->_api_key,
+				'waybill' => $id_waybill,
+				'courier' => $courier,
+			), Method::POST );
+		}
+
+		return FALSE;
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Get Currency
+	 *
+	 * @access  public
+	 * @return  mixed
+	 */
+	public function get_currency()
+	{
+		if ( $this->_account_type !== 'starter' )
+		{
+			return $this->_request( 'currency' );
+		}
+
+		return FALSE;
 	}
 
 	// ------------------------------------------------------------------------
