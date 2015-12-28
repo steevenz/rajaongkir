@@ -29,19 +29,15 @@ use Steevenz\Rajaongkir;
  * - basic
  * - pro
  *
- * @param string API Key
+ * @param string|array API Key atau konfigurasi dalam array
  * @param string Account Type (lowercase)
  * --------------------------------------------------------------
  */
- // inisiasi untuk tipe starter
- $rajaongkir = new Rajaongkir();
- 
- // inisiasi untuk tipe account basic / pro
- $rajaongkir = new Rajaongkir('API_KEY_ANDA', 'basic');
+ $rajaongkir = new Rajaongkir('API_KEY_ANDA', Rajaongkir::ACCOUNT_STARTER);
  
  // inisiasi dengan config array
  $config['api_key'] = 'API_KEY_ANDA';
- $config['account_type'] = 'basic';
+ $config['account_type'] = 'starter';
  
  $rajaongkir = new Rajaongkir($config);
 
@@ -218,7 +214,7 @@ $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574],
  * @param string Courier
  * --------------------------------------------------------------
  */
-$cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos');                                        
+$cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos'); 
 
 /*
  * --------------------------------------------------------------
