@@ -1,23 +1,31 @@
 <?php
 /**
- * YukBisnis.com
+ * Advanced RajaOngkir Unofficial API
  *
- * Application Engine under O2System Framework for PHP 5.4 or newer
+ * Copyright (C) 2015  Steeve Andrian Salim (steevenz)
  *
- * This content is released under PT. Yuk Bisnis Indonesia License
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Copyright (c) 2015, PT. Yuk Bisnis Indonesia.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * @package        Applications
- * @author         Steeven Andrian Salim
- * @copyright      Copyright (c) 2015, PT. Yuk Bisnis Indonesia.
- * @since          Version 2.0.0
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author         Steeve Andrian Salim
+ * @copyright      Copyright (c) 2015, Steeve Andrian Salim
+ * @since          Version 1.1.0
  * @filesource
  */
 
 // ------------------------------------------------------------------------
 
-namespace Applications\Libraries;
+namespace Steevenz;
 
 // ------------------------------------------------------------------------
 
@@ -26,10 +34,6 @@ use O2System\CURL\Interfaces\Method;
 
 /**
  * Rajaongkir
- *
- * @package       application
- * @subpackage    libraries
- * @category      library class
  *
  * @version       1.0.0
  * @author        Steeven Andrian Salim
@@ -80,6 +84,18 @@ class Rajaongkir
 	 */
 	protected $_curl;
 
+	/**
+	 * RajaOngkir Original Response
+	 *
+	 * @type    mixed
+	 */
+	protected $_response;
+
+	/**
+	 * RajaOngkir Errors
+	 *
+	 * @type array
+	 */
 	protected $_errors = array();
 
 	/**
@@ -208,20 +224,20 @@ class Rajaongkir
 		{
 			default:
 			case 'GET':
-				$response = $this->_curl->get( $this->_api_url, $path, $params, $headers );
+				$this->_response = $this->_curl->get( $this->_api_url, $path, $params, $headers );
 				break;
 
 			case 'POST':
 				$headers[ 'content-type' ] = 'application/x-www-form-urlencoded';
-				$response = $this->_curl->post( $this->_api_url, $path, $params, $headers );
+				$this->_response = $this->_curl->post( $this->_api_url, $path, $params, $headers );
 				break;
 		}
 
-		if ( $response->meta->http_code === 200 )
+		if ( $this->_response->meta->http_code === 200 )
 		{
-			if ( isset( $response->body->rajaongkir->results ) )
+			if ( isset( $this->_response->body->rajaongkir->results ) )
 			{
-				$result = $response->body->rajaongkir->results;
+				$result = $this->_response->body->rajaongkir->results;
 
 				if ( is_array( $result ) AND count( $result ) == 1 )
 				{
@@ -234,7 +250,7 @@ class Rajaongkir
 			}
 			else
 			{
-				if(isset($params['origin']) AND isset($params['destination']))
+				if ( isset( $params[ 'origin' ] ) AND isset( $params[ 'destination' ] ) )
 				{
 					$this->_errors[ 400 ] = 'Invalid origin / destination ID. ID origin / destination tidak ditemukan di database RajaOngkir.';
 				}
@@ -246,7 +262,7 @@ class Rajaongkir
 		}
 		else
 		{
-			$this->_errors[ $response->body->rajaongkir->status->code ] = $response->body->rajaongkir->status->description;
+			$this->_errors[ $this->_response->body->rajaongkir->status->code ] = $this->_response->body->rajaongkir->status->description;
 		}
 
 		return FALSE;
@@ -526,6 +542,21 @@ class Rajaongkir
 			'waybill' => $id_waybill,
 			'courier' => $courier,
 		), Method::POST );
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Get Response
+	 *
+	 * @param   string $offset Response Offset Object
+	 *
+	 * @access  public
+	 * @return  array
+	 */
+	public function get_response( $offset = NULL )
+	{
+		return isset( $offset ) && isset( $this->_response->{$offset} ) ? $this->_response->{$offset} : $this->_response;
 	}
 
 	// ------------------------------------------------------------------------
