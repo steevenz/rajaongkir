@@ -438,7 +438,7 @@ class Rajaongkir
 	 * @access  public
 	 * @return  mixed
 	 */
-	public function get_subdisctricts( $id_city )
+	public function get_subdistricts( $id_city )
 	{
 		return $this->_request( 'subdistrict', [ 'city' => $id_city ] );
 	}
@@ -453,7 +453,7 @@ class Rajaongkir
 	 * @access  public
 	 * @return  mixed
 	 */
-	public function get_subdisctrict( $id_subdistrict )
+	public function get_subdistrict( $id_subdistrict )
 	{
 		return $this->_request( 'subdistrict', [ 'id' => $id_subdistrict ] );
 	}
