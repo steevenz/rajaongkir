@@ -207,7 +207,7 @@ class Rajaongkir
 			}
 			elseif ( is_string( $api_key ) )
 			{
-				$this->_api_key = $api_key[ 'api_key' ];
+				$this->_api_key = $api_key;
 			}
 		}
 
