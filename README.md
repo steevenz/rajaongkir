@@ -137,7 +137,7 @@ $internationalOrigin = $rajaongkir->getInternationalOrigin(152, 6);
  * (tidak tersedia untuk tipe account starter)
  * --------------------------------------------------------------
  */
-$international_destinations = $rajaongkir->getInternationalDestinations();
+$internationalDestinations = $rajaongkir->getInternationalDestinations();
 
 /*
  * --------------------------------------------------------------
@@ -147,7 +147,7 @@ $international_destinations = $rajaongkir->getInternationalDestinations();
  * @param int Country ID
  * --------------------------------------------------------------
  */
-$international_destination = $rajaongkir->getInternationalDestination(108);
+$internationalDestination = $rajaongkir->getInternationalDestination(108);
 
 /*
  * --------------------------------------------------------------
