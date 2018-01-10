@@ -1,32 +1,35 @@
 {
-	"name"              : "steevenz/rajaongkir",
-	"description"       : "Advanced RajaOngkir API PHP Class",
-	"license"           : "GNU General Public License v3.0 License",
-	"type"              : "php-class",
-	"keywords"          : [ "rajaongkir", "api" ],
-	"authors"           : [
-		{
-			"name"     : "Steeve Andrian",
-			"email"    : "steevenz@steevenz.com",
-			"homepage" : "http://www.steevenz.com",
-			"role"     : "PHP Programmer"
-		}
-	],
-	"support"           : {
-		"email"  : "steevenz@steevenz.com",
-		"issues" : "https://github.com/steevenz/rajaongkir/issues"
-	},
-	"links"             : {
-		"info"        : "https://github.com/steevenz/rajaongkir",
-		"wiki"        : "https://github.com/steevenz/rajaongkir/wiki"
-	},
-	"require"           : {
-		"php"              : ">=5.4.0",
-		"o2system/o2curl"  : "*"
-	},
-	"autoload"          : {
-		"files" : [
-			"src/Rajaongkir.php"
-		]
-	}
+  "name": "steevenz/rajaongkir",
+  "description": "Advanced RajaOngkir API PHP Class",
+  "license": "GNU General Public License v3.0 License",
+  "type": "php-class",
+  "keywords": [
+    "rajaongkir",
+    "api"
+  ],
+  "authors": [
+    {
+      "name": "Steeve Andrian",
+      "email": "steevenz@steevenz.com",
+      "homepage": "http://www.steevenz.com",
+      "role": "PHP Programmer"
+    }
+  ],
+  "support": {
+    "email": "steevenz@steevenz.com",
+    "issues": "https://github.com/steevenz/rajaongkir/issues"
+  },
+  "links": {
+    "info": "https://github.com/steevenz/rajaongkir",
+    "wiki": "https://github.com/steevenz/rajaongkir/wiki"
+  },
+  "require": {
+    "php": ">=5.6.0",
+    "o2system/curl": "*"
+  },
+  "autoload": {
+    "files": [
+      "src/Rajaongkir.php"
+    ]
+  }
 }
