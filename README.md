@@ -252,7 +252,7 @@ Requirements
 ------------
 - PHP 5.6+
 - [Composer][9]
-- [O2System CURL][10]
+- [O2System Curl][10]
 
 Referensi
 ---------

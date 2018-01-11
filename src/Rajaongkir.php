@@ -1,6 +1,6 @@
 <?php
 /**
- * Advanced RajaOngkir PHP API Class
+ * Advanced RajaOngkir API PHP Library
  *
  * Copyright (C) 2018  Steeve Andrian Salim (steevenz)
  *
@@ -327,12 +327,10 @@ class Rajaongkir
                 break;
 
             case 'POST':
-                $headers[ 'content-type' ] = 'application/x-www-form-urlencoded';
+                $request->addHeader('content-type', 'application/x-www-form-urlencoded');
                 $this->response = $request->setUri($uri)->post($params);
                 break;
         }
-
-        //print_out($this->response);
 
         // Try to get curl error
         if (false !== ($error = $this->response->getError())) {
@@ -561,6 +559,8 @@ class Rajaongkir
     // ------------------------------------------------------------------------
 
     /**
+     * Rajaongkir::getInternationalDestination
+     *
      * Get International Destination
      *
      * @param   int $idCountry Country ID
