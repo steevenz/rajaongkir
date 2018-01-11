@@ -30,7 +30,7 @@ namespace Steevenz;
 // ------------------------------------------------------------------------
 
 use O2System\Curl;
-use O2System\Framework\Http\Message\Uri;
+use O2System\Kernel\Http\Message\Uri;
 
 /**
  * Class Rajaongkir
