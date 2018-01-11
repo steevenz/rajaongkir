@@ -1,11 +1,18 @@
 # RajaOngkir
-Ini adalah Unofficial [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
+[![Latest Stable Version](https://poser.pugx.org/steevenz/rajaongkir/v/stable)](https://packagist.org/packages/steevenz/rajaongkir) [![Total Downloads](https://poser.pugx.org/steevenz/rajaongkir/downloads)](https://packagist.org/packages/steevenz/rajaongkir) [![Latest Unstable Version](https://poser.pugx.org/steevenz/rajaongkir/v/unstable)](https://packagist.org/packages/steevenz/rajaongkir) [![License](https://poser.pugx.org/steevenz/rajaongkir/license)](https://packagist.org/packages/steevenz/rajaongkir)
+
+Ini adalah Advanced [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
+
+Fitur
+-----
+- Support seluruh tipe akun RajaOngkir (Starter, Basic, Pro).
+- Support mendapatkan biaya ongkos kirim berdasarkan berat (gram) dan volume metrics (p x l x t - otomatis akan dikonversi ke satuan gram). 
 
 Instalasi
 ---------
 Cara terbaik untuk melakukan instalasi library ini adalah dengan menggunakan [Composer][7]
 ```
-composer require steevenz/rajaongkir:"dev-master"
+composer require steevenz/rajaongkir
 ```
 
 Penggunaan
@@ -22,22 +29,24 @@ use Steevenz\Rajaongkir;
  * - basic
  * - pro
  *
- * @param string API Key
+ * @param string|array API Key atau konfigurasi dalam array
  * @param string Account Type (lowercase)
  * --------------------------------------------------------------
  */
- // inisiasi untuk tipe starter
- $rajaongkir = new Rajaongkir();
+ $rajaongkir = new Rajaongkir('API_KEY_ANDA', Rajaongkir::ACCOUNT_STARTER);
  
- // inisiasi untuk tipe account basic / pro
- $rajaongkir = new Rajaongkir('API_KEY_ANDA', 'basic');
+ // inisiasi dengan config array
+ $config['api_key'] = 'API_KEY_ANDA';
+ $config['account_type'] = 'starter';
+ 
+ $rajaongkir = new Rajaongkir($config);
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan list seluruh propinsi
  * --------------------------------------------------------------
  */
-$provinces = $rajaongkir->get_provinces();
+$provinces = $rajaongkir->getProvinces();
 
 /*
  * --------------------------------------------------------------
@@ -46,23 +55,23 @@ $provinces = $rajaongkir->get_provinces();
  * @param int Province ID
  * --------------------------------------------------------------
  */
-$province = $rajaongkir->get_province(1);
+$province = $rajaongkir->getProvince(1);
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan list seluruh kota
  * --------------------------------------------------------------
  */
-$cities = $rajaongkir->get_cities();
+$cities = $rajaongkir->getCities();
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan list seluruh kota di propinsi tertentu
  *
- * @param int Province ID
+ * @param int Province ID (optional)
  * --------------------------------------------------------------
  */
-$cities = $rajaongkir->get_cities(1);
+$cities = $rajaongkir->getCities(1);
 
 /*
  * --------------------------------------------------------------
@@ -71,25 +80,25 @@ $cities = $rajaongkir->get_cities(1);
  * @param int City ID
  * --------------------------------------------------------------
  */
-$city = $rajaongkir->get_city(1);
+$city = $rajaongkir->getCity(1);
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan list seluruh subdistrict dari kota tertentu
  *
- * @param int City ID
+ * @param int City ID (optional)
  * --------------------------------------------------------------
  */
-$subdistricts = $rajaongkir->get_subdistricts(1);
+$subdistricts = $rajaongkir->getSubdistricts(39);
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan detail subdistrict
  *
- * @param int Subdistrict ID
+ * @param int Subdistrict ID 
  * --------------------------------------------------------------
  */
-$subdistrict = $rajaongkir->get_subdistrict(1);
+$subdistrict = $rajaongkir->getSubdistrict(537);
 
 /*
  * --------------------------------------------------------------
@@ -98,7 +107,7 @@ $subdistrict = $rajaongkir->get_subdistrict(1);
  * (tidak tersedia untuk tipe account starter)
  * --------------------------------------------------------------
  */
-$international_origins = $rajaongkir->get_international_origins();
+$internationalOrigins = $rajaongkir->getInternationalOrigins();
 
 /*
  * --------------------------------------------------------------
@@ -106,20 +115,21 @@ $international_origins = $rajaongkir->get_international_origins();
  * ke Internasional di propinsi tertentu
  * (tidak tersedia untuk tipe account starter)
  *
- * @param int Province ID
+ * @param int Province ID (optional)
  * --------------------------------------------------------------
  */
-$international_origins = $rajaongkir->get_international_origins(6);
+$internationalOrigins = $rajaongkir->getInternationalOrigins(6);
 
 /*
  * --------------------------------------------------------------
  * Mendapatkan detail Origin Internasional
  * (tidak tersedia untuk tipe account starter)
  *
- * @param int City ID
+ * @param int City ID (optional)
+ * @param int Province ID (optional)
  * --------------------------------------------------------------
  */
-$international_origin = $rajaongkir->get_international_origin(152);
+$internationalOrigin = $rajaongkir->getInternationalOrigin(152, 6);
 
 /*
  * --------------------------------------------------------------
@@ -127,7 +137,7 @@ $international_origin = $rajaongkir->get_international_origin(152);
  * (tidak tersedia untuk tipe account starter)
  * --------------------------------------------------------------
  */
-$international_destinations = $rajaongkir->get_international_destinations();
+$internationalDestinations = $rajaongkir->getInternationalDestinations();
 
 /*
  * --------------------------------------------------------------
@@ -137,7 +147,7 @@ $international_destinations = $rajaongkir->get_international_destinations();
  * @param int Country ID
  * --------------------------------------------------------------
  */
-$international_destination = $rajaongkir->get_international_destination(108);
+$internationalDestination = $rajaongkir->getInternationalDestination(108);
 
 /*
  * --------------------------------------------------------------
@@ -149,7 +159,7 @@ $international_destination = $rajaongkir->get_international_destination(108);
  * @param string Courier
  * --------------------------------------------------------------
  */
-$cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574], 1000, 'jne');
+$cost = $rajaongkir->getCost(['city' => 501], ['subdistrict' => 574], 1000, 'jne');
 
 /*
  * --------------------------------------------------------------
@@ -165,11 +175,12 @@ $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574], 1000, 'jn
  * @param string Courier
  * --------------------------------------------------------------
  */
-$cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574], 
-                                        array( 'length' => 50, 
-                                               'width' => 50, 
-                                               'height' => 50
-                                        ), 'jne');
+$cost = $rajaongkir->getCost(['city' => 501], ['subdistrict' => 574],
+                    [
+                        'length' => 50,
+                        'width'  => 50,
+                        'height' => 50,
+                    ], 'jne');
 
 /*
  * --------------------------------------------------------------
@@ -187,12 +198,13 @@ $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574],
  * @param string Courier
  * --------------------------------------------------------------
  */
- $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574], 
-                                        array( 'weight' => 1000,
-                                                'length' => 50, 
-                                                'width' => 50, 
-                                                'height' => 50
-                                        ), 'jne');
+ $cost = $rajaongkir->getCost(['city' => 501], ['subdistrict' => 574],
+                     [
+                         'weight' => 1000,
+                         'length' => 50,
+                         'width'  => 50,
+                         'height' => 50,
+                     ], 'jne');
                                         
 /*
  * --------------------------------------------------------------
@@ -205,7 +217,7 @@ $cost = $rajaongkir->get_cost(['city' => 501], ['subdistrict' => 574],
  * @param string Courier
  * --------------------------------------------------------------
  */
-$cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos');                                        
+$cost = $rajaongkir->getCost(['city' => 152], ['country' => 108], 1400, 'pos'); 
 
 /*
  * --------------------------------------------------------------
@@ -215,8 +227,17 @@ $cost = $rajaongkir->get_cost(['city' => 152], ['country' => 108], 1400, 'pos');
  * @param string Courier
  * --------------------------------------------------------------
  */
- $waybill = $rajaongkir->get_waybill('SOCAG00183235715', 'jne');
+ $waybill = $rajaongkir->getWaybill('SOCAG00183235715', 'jne');
+ 
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan informasi nilai tukar rupiah terhadap US dollar.
+ * --------------------------------------------------------------
+ */
+ $currency = $rajaongkir->getCurrency();
 ```
+
+Untuk keterangan lebih lengkap dapat dibaca di [Wiki](https://github.com/steevenz/rajaongkir/wiki)
 
 Ide, Kritik dan Saran
 ---------------------
@@ -229,9 +250,9 @@ Jika anda menemukan bugs atau issue, anda dapat mempostingnya di [Github Issues]
 
 Requirements
 ------------
-- PHP 5.4+
+- PHP 5.6+
 - [Composer][9]
-- [O2System CURL (O2CURL)][10]
+- [O2System CURL][10]
 
 Referensi
 ---------
@@ -245,6 +266,6 @@ Untuk mengetahui lebih lanjut mengenai RajaOngkir API, lihat di [Dokumentasi Raj
 [6]: http://github.com/steevenz/rajaongkir/issues
 [7]: https://packagist.org/packages/steevenz/rajaongkir
 [9]: https://getcomposer.org
-[10]: http://github.com/o2system/o2curl
+[10]: http://github.com/o2system/curl
 [11]: http://rajaongkir.com
 [12]: http://rajaongkir.com/dokumentasi
