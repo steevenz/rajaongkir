@@ -14,6 +14,17 @@ Cara terbaik untuk melakukan instalasi library ini adalah dengan menggunakan [Co
 ```
 composer require steevenz/rajaongkir
 ```
+PHP Framework yang mendukung instalasi diatas:
+1. O2System Framework
+2. Laravel Framework
+3. Yii Framework
+4. Symfony Framework
+5. CodeIgniter Framework
+
+Instalasi pada framework lain atau PHP Native
+```php
+require_once('path/to/steevenz/rajaongkir/src/autoload.php');
+```
 
 Penggunaan
 ----------
@@ -235,6 +246,15 @@ $cost = $rajaongkir->getCost(['city' => 152], ['country' => 108], 1400, 'pos');
  * --------------------------------------------------------------
  */
  $currency = $rajaongkir->getCurrency();
+ 
+/*
+ * --------------------------------------------------------------
+ * Melakukan debugging errors.
+ * --------------------------------------------------------------
+ */
+ if(false === ($waybill = $rajaongkir->getWaybill('SOCAG00183235715', 'jne'))) {
+    print_out($rajaongkir->getErrors());
+ }
 ```
 
 Untuk keterangan lebih lengkap dapat dibaca di [Wiki](https://github.com/steevenz/rajaongkir/wiki)

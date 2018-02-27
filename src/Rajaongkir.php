@@ -31,6 +31,7 @@ namespace Steevenz;
 
 use O2System\Curl;
 use O2System\Kernel\Http\Message\Uri;
+use O2System\Spl\Traits\Collectors\ErrorCollectorTrait;
 
 /**
  * Class Rajaongkir
@@ -38,6 +39,8 @@ use O2System\Kernel\Http\Message\Uri;
  */
 class Rajaongkir
 {
+    use ErrorCollectorTrait;
+
     /**
      * Constant Account Type
      *
@@ -196,16 +199,6 @@ class Rajaongkir
      */
     protected $response;
 
-    /**
-     * Rajaongkir::$errors
-     *
-     * Rajaongkir errors.
-     *
-     * @access  protected
-     * @type    array
-     */
-    protected $errors = [];
-
     // ------------------------------------------------------------------------
 
     /**
@@ -332,25 +325,33 @@ class Rajaongkir
                 break;
         }
 
+        print_out($this->response);
+
         // Try to get curl error
         if (false !== ($error = $this->response->getError())) {
-            $this->errors = $error;
+            $this->addErrors($error->getArrayCopy());
         } else {
-            $body = $this->response->getBody()->rajaongkir;
-            $status = $body[ 'status' ];
+            $body = $this->response->getBody();
 
-            if ($status[ 'code' ] == 200) {
-                if(isset($body['results'])) {
-                    if(count($body[ 'results' ]) == 1 && isset($body['results'][0])) {
-                        return $body['results'][0];
-                    } elseif( count( $body['results']) ) {
-                        return $body['results'];
-                    }
-                } elseif(isset($body['result'])) {
-                    return $body['result'];
-                }
+            if($body instanceof \DOMDocument) {
+                $this->errors[ 404 ] = 'Page Not Found!';
             } else {
-                $this->errors[ $status[ 'code' ] ] = $status[ 'description' ];
+                $body = $body->rajaongkir;
+                $status = $body[ 'status' ];
+
+                if ($status[ 'code' ] == 200) {
+                    if(isset($body['results'])) {
+                        if(count($body[ 'results' ]) == 1 && isset($body['results'][0])) {
+                            return $body['results'][0];
+                        } elseif( count( $body['results']) ) {
+                            return $body['results'];
+                        }
+                    } elseif(isset($body['result'])) {
+                        return $body['result'];
+                    }
+                } else {
+                    $this->errors[ $status[ 'code' ] ] = $status[ 'description' ];
+                }
             }
         }
 
@@ -458,6 +459,12 @@ class Rajaongkir
      */
     public function getSubdistricts($idCity)
     {
+        if($this->accountType === 'starter') {
+            $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun starter tidak mendukung hingga tingkat kecamatan.';
+
+            return false;
+        }
+
         return $this->request('subdistrict', ['city' => $idCity]);
     }
 
@@ -475,6 +482,12 @@ class Rajaongkir
      */
     public function getSubdistrict($idSubdistrict)
     {
+        if($this->accountType === 'starter') {
+            $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun starter tidak mendukung hingga tingkat kecamatan.';
+
+            return false;
+        }
+
         return $this->request('subdistrict', ['id' => $idSubdistrict]);
     }
 
@@ -493,6 +506,8 @@ class Rajaongkir
     public function getInternationalOrigins($idProvince = null)
     {
         if ($this->accountType === 'starter') {
+            $this->errors[ 301 ] = 'Unsupported International Origin Request. Tipe akun starter tidak mendukung tingkat international.';
+
             return false;
         }
 
@@ -521,6 +536,8 @@ class Rajaongkir
     public function getInternationalOrigin($idCity = null, $idProvince = null)
     {
         if ($this->accountType === 'starter') {
+            $this->errors[ 301 ] = 'Unsupported International Origin Request. Tipe akun starter tidak mendukung tingkat international.';
+
             return false;
         }
 
@@ -550,6 +567,8 @@ class Rajaongkir
     public function getInternationalDestinations()
     {
         if ($this->accountType === 'starter') {
+            $this->errors[ 301 ] = 'Unsupported International Destination Request. Tipe akun starter tidak mendukung tingkat international.';
+
             return false;
         }
 
@@ -571,6 +590,8 @@ class Rajaongkir
     public function getInternationalDestination($idCountry = null)
     {
         if ($this->accountType === 'starter') {
+            $this->errors[ 301 ] = 'Unsupported International Destination Request. Tipe akun starter tidak mendukung tingkat international.';
+
             return false;
         }
 
@@ -774,6 +795,8 @@ class Rajaongkir
             return $this->request('currency');
         }
 
+        $this->errors[ 301 ] = 'Unsupported Get Currency. Tipe akun starter tidak mendukung pengecekan currency.';
+
         return false;
     }
 
@@ -792,24 +815,5 @@ class Rajaongkir
     public function getResponse()
     {
         return $this->response;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Rajaongkir::getErrors
-     *
-     * Get errors request.
-     *
-     * @access  public
-     * @return  array|bool Returns FALSE if there is no errors.
-     */
-    public function getErrors()
-    {
-        if (count($this->errors)) {
-            return $this->errors;
-        }
-
-        return false;
     }
 }
