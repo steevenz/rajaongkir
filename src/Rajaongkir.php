@@ -153,7 +153,7 @@ class Rajaongkir
             'sap',
             'jet',
             'dse',
-            'first'
+            'first',
         ],
     ];
 
@@ -166,27 +166,27 @@ class Rajaongkir
      * @type array
      */
     protected $couriersList = [
-        'jne'      => 'Jalur Nugraha Ekakurir (JNE)',
-        'pos'      => 'POS Indonesia (POS)',
-        'tiki'     => 'Citra Van Titipan Kilat (TIKI)',
-        'pcp'      => 'Priority Cargo and Package (PCP)',
-        'esl'      => 'Eka Sari Lorena (ESL)',
-        'rpx'      => 'RPX Holding (RPX)',
-        'pandu'    => 'Pandu Logistics (PANDU)',
-        'wahana'   => 'Wahana Prestasi Logistik (WAHANA)',
-        'sicepat'  => 'SiCepat Express (SICEPAT)',
-        'j&t'      => 'J&T Express (J&T)',
-        'pahala'   => 'Pahala Kencana Express (PAHALA)',
-        'cahaya'   => 'Cahaya Logistik (CAHAYA)',
-        'sap'      => 'SAP Express (SAP)',
-        'jet'      => 'JET Express (JET)',
-        'indah'    => 'Indah Logistic (INDAH)',
-        'slis'     => 'Solusi Express (SLIS)',
+        'jne'       => 'Jalur Nugraha Ekakurir (JNE)',
+        'pos'       => 'POS Indonesia (POS)',
+        'tiki'      => 'Citra Van Titipan Kilat (TIKI)',
+        'pcp'       => 'Priority Cargo and Package (PCP)',
+        'esl'       => 'Eka Sari Lorena (ESL)',
+        'rpx'       => 'RPX Holding (RPX)',
+        'pandu'     => 'Pandu Logistics (PANDU)',
+        'wahana'    => 'Wahana Prestasi Logistik (WAHANA)',
+        'sicepat'   => 'SiCepat Express (SICEPAT)',
+        'j&t'       => 'J&T Express (J&T)',
+        'pahala'    => 'Pahala Kencana Express (PAHALA)',
+        'cahaya'    => 'Cahaya Logistik (CAHAYA)',
+        'sap'       => 'SAP Express (SAP)',
+        'jet'       => 'JET Express (JET)',
+        'indah'     => 'Indah Logistic (INDAH)',
+        'slis'      => 'Solusi Express (SLIS)',
         'expedito*' => 'Expedito*',
-        'dse'      => '21 Express (DSE)',
-        'first'    => 'First Logistics (FIRST)',
-        'ncs'      => 'Nusantara Card Semesta (NCS)',
-        'star'     => 'Star Cargo (STAR)',
+        'dse'       => '21 Express (DSE)',
+        'first'     => 'First Logistics (FIRST)',
+        'ncs'       => 'Nusantara Card Semesta (NCS)',
+        'star'      => 'Star Cargo (STAR)',
     ];
 
     /**
@@ -333,21 +333,21 @@ class Rajaongkir
         } else {
             $body = $this->response->getBody();
 
-            if($body instanceof \DOMDocument) {
+            if ($body instanceof \DOMDocument) {
                 $this->errors[ 404 ] = 'Page Not Found!';
             } else {
                 $body = $body->rajaongkir;
                 $status = $body[ 'status' ];
 
                 if ($status[ 'code' ] == 200) {
-                    if(isset($body['results'])) {
-                        if(count($body[ 'results' ]) == 1 && isset($body['results'][0])) {
-                            return $body['results'][0];
-                        } elseif( count( $body['results']) ) {
-                            return $body['results'];
+                    if (isset($body[ 'results' ])) {
+                        if (count($body[ 'results' ]) == 1 && isset($body[ 'results' ][ 0 ])) {
+                            return $body[ 'results' ][ 0 ];
+                        } elseif (count($body[ 'results' ])) {
+                            return $body[ 'results' ];
                         }
-                    } elseif(isset($body['result'])) {
-                        return $body['result'];
+                    } elseif (isset($body[ 'result' ])) {
+                        return $body[ 'result' ];
                     }
                 } else {
                     $this->errors[ $status[ 'code' ] ] = $status[ 'description' ];
@@ -459,8 +459,12 @@ class Rajaongkir
      */
     public function getSubdistricts($idCity)
     {
-        if($this->accountType === 'starter') {
+        if ($this->accountType === 'starter') {
             $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun starter tidak mendukung hingga tingkat kecamatan.';
+
+            return false;
+        } elseif ($this->accountType === 'basic') {
+            $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun basic tidak mendukung hingga tingkat kecamatan.';
 
             return false;
         }
@@ -482,8 +486,12 @@ class Rajaongkir
      */
     public function getSubdistrict($idSubdistrict)
     {
-        if($this->accountType === 'starter') {
+        if ($this->accountType === 'starter') {
             $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun starter tidak mendukung hingga tingkat kecamatan.';
+
+            return false;
+        } elseif ($this->accountType === 'basic') {
+            $this->errors[ 302 ] = 'Unsupported Subdistricts Request. Tipe akun basic tidak mendukung hingga tingkat kecamatan.';
 
             return false;
         }
