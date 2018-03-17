@@ -325,8 +325,6 @@ class Rajaongkir
                 break;
         }
 
-        print_out($this->response);
-
         // Try to get curl error
         if (false !== ($error = $this->response->getError())) {
             $this->addErrors($error->getArrayCopy());
