@@ -255,6 +255,20 @@ $cost = $rajaongkir->getCost(['city' => 152], ['country' => 108], 1400, 'pos');
  if(false === ($waybill = $rajaongkir->getWaybill('SOCAG00183235715', 'jne'))) {
     print_out($rajaongkir->getErrors());
  }
+ 
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan daftar courier yang didukung oleh tipe akun anda
+ * --------------------------------------------------------------
+ */
+ $supportedCouriers = $rajaongkir->getSupportedCouriers();
+  
+/*
+ * --------------------------------------------------------------
+ * Mendapatkan daftar way bill courier yang didukung oleh tipe akun anda
+ * --------------------------------------------------------------
+ */
+ $supportedWayBills = $rajaongkir->getSupportedWayBills();
 ```
 
 Untuk keterangan lebih lengkap dapat dibaca di [Wiki](https://github.com/steevenz/rajaongkir/wiki)

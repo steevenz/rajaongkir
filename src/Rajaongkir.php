@@ -809,6 +809,42 @@ class Rajaongkir
     // ------------------------------------------------------------------------
 
     /**
+     * Rajaongkir::getSupportedCouriers
+     *
+     * Gets list of supported couriers by your account.
+     *
+     * @return array|bool Returns FALSE if failed.
+     */
+    public function getSupportedCouriers()
+    {
+        if(isset($this->supportedCouriers[$this->accountType])) {
+            return $this->supportedCouriers[$this->accountType];
+        }
+
+        return false;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Rajaongkir::getSupportedWayBills
+     *
+     * Gets list of supported way bills based on account type.
+     *
+     * @return array|bool Returns FALSE if failed.
+     */
+    public function getSupportedWayBills()
+    {
+        if(isset($this->supportedWayBills[$this->accountType])) {
+            return $this->supportedWayBills[$this->accountType];
+        }
+
+        return false;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
      * Rajaongkir::getResponse
      *
      * Get original response object.
