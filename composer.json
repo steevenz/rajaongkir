@@ -1,7 +1,7 @@
 {
   "name": "steevenz/rajaongkir",
   "description": "Advanced RajaOngkir API PHP Class",
-  "license": "GNU General Public License v3.0 License",
+  "license": "MIT",
   "type": "php-class",
   "keywords": [
     "rajaongkir",
