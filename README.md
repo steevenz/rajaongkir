@@ -1,7 +1,7 @@
 # RajaOngkir
 [![Latest Stable Version](https://poser.pugx.org/steevenz/rajaongkir/v/stable)](https://packagist.org/packages/steevenz/rajaongkir) [![Total Downloads](https://poser.pugx.org/steevenz/rajaongkir/downloads)](https://packagist.org/packages/steevenz/rajaongkir) [![Latest Unstable Version](https://poser.pugx.org/steevenz/rajaongkir/v/unstable)](https://packagist.org/packages/steevenz/rajaongkir) [![License](https://poser.pugx.org/steevenz/rajaongkir/license)](https://packagist.org/packages/steevenz/rajaongkir)
 
-Ini adalah Advanced [RajaOngkir][11] API PHP Class, yang berfungsi untuk melakukan request API [RajaOngkir][11].
+[RajaOngkir][11] API PHP Class Library berfungsi untuk melakukan request API [RajaOngkir][11].
 
 Fitur
 -----
