@@ -110,7 +110,7 @@ class Rajaongkir
             'rpx',
         ],
         'pro'     => [
-            'jne',
+                        'jne',
             'pos',
             'tiki',
             'rpx',
@@ -131,6 +131,9 @@ class Rajaongkir
             'first',
             'ncs',
             'star',
+            'ninja',
+            'lion',
+            'idl',
         ],
     ];
 
