@@ -1,5 +1,10 @@
 # RajaOngkir
-[![Latest Stable Version](https://poser.pugx.org/steevenz/rajaongkir/v/stable)](https://packagist.org/packages/steevenz/rajaongkir) [![Total Downloads](https://poser.pugx.org/steevenz/rajaongkir/downloads)](https://packagist.org/packages/steevenz/rajaongkir) [![Latest Unstable Version](https://poser.pugx.org/steevenz/rajaongkir/v/unstable)](https://packagist.org/packages/steevenz/rajaongkir) [![License](https://poser.pugx.org/steevenz/rajaongkir/license)](https://packagist.org/packages/steevenz/rajaongkir)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/steevenz/rajaongkir/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevenz/rajaongkir/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/steevenz/rajaongkir/badges/build.png?b=master)](https://scrutinizer-ci.com/g/steevenz/rajaongkir/build-status/master)
+[![Latest Stable Version](https://poser.pugx.org/steevenz/rajaongkir/v/stable)](https://packagist.org/packages/steevenz/rajaongkir)
+[![Total Downloads](https://poser.pugx.org/steevenz/rajaongkir/downloads)](https://packagist.org/packages/steevenz/rajaongkir)
+[![License](https://poser.pugx.org/steevenz/rajaongkir/license)](https://packagist.org/packages/steevenz/rajaongkir)
 
 [RajaOngkir][11] API PHP Class Library berfungsi untuk melakukan request API [RajaOngkir][11].
 
@@ -284,7 +289,7 @@ Jika anda menemukan bugs atau issue, anda dapat mempostingnya di [Github Issues]
 
 Requirements
 ------------
-- PHP 5.6+
+- PHP 7.2+
 - [Composer][9]
 - [O2System Curl][10]
 
