@@ -131,6 +131,10 @@ class Rajaongkir
             'first',
             'ncs',
             'star',
+            'lion',
+            'ninja-express',
+            'idl',
+            'rex',
         ],
     ];
 
@@ -241,7 +245,7 @@ class Rajaongkir
      *
      * Set Rajaongkir API Key.
      *
-     * @param   string $apiKey Rajaongkir API Key
+     * @param string $apiKey Rajaongkir API Key
      *
      * @access  public
      * @return  static
@@ -260,7 +264,7 @@ class Rajaongkir
      *
      * Set Rajaongkir account type.
      *
-     * @param   string $accountType RajaOngkir Account Type, can be starter, basic or pro
+     * @param string $accountType RajaOngkir Account Type, can be starter, basic or pro
      *
      * @access  public
      * @return  static
@@ -399,7 +403,7 @@ class Rajaongkir
      *
      * Get detail of single province.
      *
-     * @param   int $idProvince Province ID
+     * @param int $idProvince Province ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -416,7 +420,7 @@ class Rajaongkir
      *
      * Get list of province cities.
      *
-     * @param   int $idProvince Province ID
+     * @param int $idProvince Province ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -439,7 +443,7 @@ class Rajaongkir
      *
      * Get detail of single city.
      *
-     * @param   int $idCity City ID
+     * @param int $idCity City ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -456,7 +460,7 @@ class Rajaongkir
      *
      * Get list of city subdisctricts.
      *
-     * @param   int $idCity City ID
+     * @param int $idCity City ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -483,7 +487,7 @@ class Rajaongkir
      *
      * Get detail of single subdistrict.
      *
-     * @param   int $idSubdistrict Subdistrict ID
+     * @param int $idSubdistrict Subdistrict ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -510,7 +514,7 @@ class Rajaongkir
      *
      * Get list of supported international origins.
      *
-     * @param   int $idProvince Province ID
+     * @param int $idProvince Province ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -539,8 +543,8 @@ class Rajaongkir
      *
      * Get list of supported international origins by city and province.
      *
-     * @param   int $idCity     City ID
-     * @param   int $idProvince Province ID
+     * @param int $idCity     City ID
+     * @param int $idProvince Province ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -571,7 +575,7 @@ class Rajaongkir
      *
      * Get list of international destinations.
      *
-     * @param   int $id_country Country ID
+     * @param int $id_country Country ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -594,7 +598,7 @@ class Rajaongkir
      *
      * Get International Destination
      *
-     * @param   int $idCountry Country ID
+     * @param int $idCountry Country ID
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -623,16 +627,6 @@ class Rajaongkir
      *
      * Get cost calculation.
      *
-     * @example
-     * $rajaongkir->getCost(
-     *      ['city' => 1],
-     *      ['subdistrict' => 12],
-     *      ['weight' => 100, 'length' => 100, 'width' => 100, 'height' => 100, 'diameter' => 100],
-     *      'jne'
-     * );
-     *
-     * @see      http://rajaongkir.com/dokumentasi/pro
-     *
      * @param array  $origin            City, District or Subdistrict Origin
      * @param array  $destination       City, District or Subdistrict Destination
      * @param array  $metrics           Array of Specification
@@ -645,6 +639,16 @@ class Rajaongkir
      *
      * @access   public
      * @return  array|bool Returns FALSE if failed.
+     * @see      http://rajaongkir.com/dokumentasi/pro
+     *
+     * @example
+     * $rajaongkir->getCost(
+     *      ['city' => 1],
+     *      ['subdistrict' => 12],
+     *      ['weight' => 100, 'length' => 100, 'width' => 100, 'height' => 100, 'diameter' => 100],
+     *      'jne'
+     * );
+     *
      */
     public function getCost(array $origin, array $destination, $metrics, $courier)
     {
@@ -770,8 +774,8 @@ class Rajaongkir
      *
      * Get detail of waybill.
      *
-     * @param   int         $idWaybill Receipt ID
-     * @param   null|string $courier   Courier Code
+     * @param int         $idWaybill Receipt ID
+     * @param null|string $courier   Courier Code
      *
      * @access  public
      * @return  array|bool Returns FALSE if failed.
@@ -823,8 +827,8 @@ class Rajaongkir
      */
     public function getSupportedCouriers()
     {
-        if(isset($this->supportedCouriers[$this->accountType])) {
-            return $this->supportedCouriers[$this->accountType];
+        if (isset($this->supportedCouriers[ $this->accountType ])) {
+            return $this->supportedCouriers[ $this->accountType ];
         }
 
         return false;
@@ -841,8 +845,8 @@ class Rajaongkir
      */
     public function getSupportedWayBills()
     {
-        if(isset($this->supportedWayBills[$this->accountType])) {
-            return $this->supportedWayBills[$this->accountType];
+        if (isset($this->supportedWayBills[ $this->accountType ])) {
+            return $this->supportedWayBills[ $this->accountType ];
         }
 
         return false;
@@ -855,7 +859,7 @@ class Rajaongkir
      *
      * Get original response object.
      *
-     * @param   string $offset Response Offset Object
+     * @param string $offset Response Offset Object
      *
      * @access  public
      * @return  \O2System\Curl\Response|bool Returns FALSE if failed.
