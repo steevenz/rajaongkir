@@ -119,7 +119,7 @@ class Rajaongkir
             'pandu',
             'wahana',
             'sicepat',
-            'j&t',
+            'jnt',
             'pahala',
             'cahaya',
             'sap',
